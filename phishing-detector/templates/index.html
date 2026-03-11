@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Phishing Detector</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+  <link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=Rajdhani:wght@400;600;700&display=swap" rel="stylesheet"/>
+</head>
+<body>
+
+  <div class="container">
+
+    <!-- Header -->
+    <div class="header">
+      <div class="logo-icon">🛡️</div>
+      <h1>Phishing URL Detector</h1>
+      <p class="subtitle">Enter any website URL below to check if it is safe or dangerous.</p>
+    </div>
+
+    <!-- Form -->
+    <div class="form-box">
+      <form method="POST">
+        <div class="input-row">
+          <input
+            type="text"
+            name="url"
+            placeholder="https://example.com"
+            required
+            autocomplete="off"
+            spellcheck="false"
+          />
+          <button type="submit">CHECK URL</button>
+        </div>
+        <p class="hint">// Paste any suspicious link to analyze it instantly</p>
+      </form>
+    </div>
+
+    <!-- Result -->
+    {% if result %}
+    <div class="result-box {{ color }}">
+
+      <div class="result-header">
+        {% if color == 'danger' %}
+          <span class="result-icon">⚠️</span>
+        {% elif color == 'warning' %}
+          <span class="result-icon">⚡</span>
+        {% else %}
+          <span class="result-icon">✅</span>
+        {% endif %}
+        <h2>{{ result }}</h2>
+      </div>
+
+      {% if reasons %}
+      <div class="reasons">
+        <p class="reasons-title">// Detection Details</p>
+        <ul>
+          {% for r in reasons %}
+          <li>
+            {% if color == 'danger' %}⛔{% elif color == 'warning' %}⚠{% else %}✔{% endif %}
+            {{ r }}
+          </li>
+          {% endfor %}
+        </ul>
+      </div>
+      {% endif %}
+
+    </div>
+    {% endif %}
+
+    <footer>PhishGuard — URL Safety Checker</footer>
+
+  </div>
+
+</body>
+</html>
